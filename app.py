@@ -2,6 +2,7 @@ import dash
 from dash import dcc, html, Input, Output
 import pandas as pd
 import plotly.graph_objects as go
+import os  # For reading Render's PORT environment variable
 
 # Debug: Confirm the script is starting
 print("Script is starting...")
@@ -155,6 +156,8 @@ def update_chart(selected_sectors):
     
     return fig
 
+# Bind to Render's dynamic port and host
 if __name__ == '__main__':
     print("Starting the server...")
-    app.run_server(debug=True, port=8050)
+    port = int(os.environ.get("PORT", 8050))  # Use Render's PORT environment variable
+    app.run_server(debug=True, host='0.0.0.0', port=port)
